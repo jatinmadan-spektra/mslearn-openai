@@ -1,0 +1,780 @@
+# Lab 01: Utilize prompt engineering in your app
+## Estimated time: 60 minutes
+
+## Lab scenario
+
+When working with the Azure OpenAI Service, how developers shape their prompt greatly impacts how the generative AI model will respond. Azure OpenAI models are able to tailor and format content, if requested in a clear and concise way. In this exercise, you'll learn how different prompts for similar content help shape the AI model's response to better satisfy your requirements.
+
+In scenario for this exercise, you will perform the role of a software developer working on a wildlife marketing campaign. You are exploring how to use generative AI to improve advertising emails and categorize articles that might apply to your team. The prompt engineering techniques used in the exercise can be applied similarly for a variety of use cases.
+
+## Lab objectives
+In this lab, you will complete the following tasks:
+
+- Task 1: Provision a Microsoft Foundry resource
+- Task 2: Deploy a model
+- Task 3: Apply prompt engineering in chat playground
+- Task 4: Set up an application in Cloud Shell
+- Task 5: Configure your application
+- Task 6: Run your application
+
+### Task 1: Provision a Microsoft Foundry resource
+
+In this task, you'll create an Azure resource in the Azure portal by selecting the Microsoft Foundry service and configuring settings such as the region and pricing tier. This setup allows you to integrate OpenAI's advanced language models into your applications.
+
+1. In the **Azure portal**, search for **Microsoft Foundry (1)** and select **Microsoft Foundry (2)** from the results.
+
+   ![](../media/mf-1.png)
+
+1. On the **Microsoft Foundry** overview pane, select **Create a resource**
+
+   ![](../media/mf-2.png)
+
+1. Create a **Foundry** resource using the settings below, then click **Review + create (6)** , leaving all other options at their defaults.
+    
+    - Subscription: **Default Subscription (1)**
+    
+    - Resource group: **openai-<inject key="Deployment-ID" enableCopy="false"></inject> (2)**
+    
+    - Name: **OpenAI-Lab03-<inject key="Deployment-ID" enableCopy="false"></inject> (3)**
+
+    - Region: **<inject key="Region" enableCopy="false"></inject> (4)**
+    
+    - Default project name: **proj-default (5)**
+  
+      ![](../media/mf-3.png)
+
+1. Under the **Review + create** tab, click on **Create**.
+
+1. Wait for deployment to complete. Click on **Go to resource** to navigate to the deployed Foundry resource in the Azure portal.
+
+      ![](../media/mf-4.png)
+
+1. To capture the Keys and Endpoints values, on **OpenAI-Lab03-<inject key="Deployment-ID" enableCopy="false"></inject>** blade:
+
+    - On the left navigation menu, expand **Resource Management** and select **Keys and Endpoint (1)**.
+    
+    - Copy **Key 1 (2)** and ensure to paste it in a text editor such as notepad for future reference.
+    
+    - Select **OpenAI (3)**, copy the **Endpoint (4)** API URL by clicking on copy to clipboard. Paste it in a text editor such as notepad for later use.
+
+        ![](../media/mf-5.png "Keys and Endpoints")
+
+<validation step="3af754c5-e7ba-4643-948a-fa7650c2e53e" />
+
+> **Congratulations** on completing the task! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding task. If you receive a success message, you can proceed to the next task. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help you out.
+
+### Task 2: Deploy a model
+
+In this task, you'll deploy a specific AI model instance within your Microsoft Foundry resource to integrate advanced language capabilities into your applications.
+
+1. In the Foundry resource pane, navigate back to the **Overview** page and click **Go to Foundry portal**. This will take you to **Microsoft Foundry**.
+
+    ![](../media/mf-6.png)
+
+1. Click on **View deployments** under Use a model.
+
+    ![](../media/SS-1.png)
+    
+1. On Deployments tab, click **Deploy (1)**, and choose **Deploy a base model (2)**.
+
+    ![](../media/SS-2.png)
+
+1. Search for **gpt-5-mini (1)** in the search bar, select **gpt-5-mini (2)**.
+
+     ![](../media/L1T2S3a-0707.png) 
+
+1. On **gpt-5-mini** details page, click on **Custom deploy**.
+
+   ![](../media/L1T2S4-0707.png)
+
+   >**Note:** If the **Custom Deploy** option is not visible, click **Deploy**, then select **Custom settings**.
+
+     ![](../media/mf-7.png) 
+
+1. Within the **Deploy gpt-5-mini** pop-up interface, enter the following details:
+
+    - **Deployment name**: **text-turbo (1)**
+
+    - **Deployment type**: **Global Standard (2)**
+
+    - **Tokens per Minute Rate Limit**: **15K (3)**
+
+    - **Guardrails**: **DefaultV2 (4)**
+
+    - Click on **Deploy (5)**
+
+         ![](../media/new-b1.png)
+    
+<validation step="fc4ff6f5-ab01-4991-8e87-980284dba951" />
+
+> **Congratulations** on completing the task! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding task. If you receive a success message, you can proceed to the next task. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help you out.
+
+
+### Task 3: Apply prompt engineering in chat playground
+
+In this task, you will examine how prompt engineering improves model responses in the playground by experimenting with prompts, such as writing a Python app for animals with fun names.
+
+1. Once the model is deployed, select **Save as agent**.
+
+    ![](../media/mf-8.png)
+
+    >**Note:** If foundry user role is not assigned, click **Assign me**. Wait for 5 minutes and refresh the page. Again click **Save as Agent**.
+
+     ![](../media/mf-9.png)
+
+1. On **Create an agent** pop-up, enter the Agent name as **text-turbo-agent (1)** and click **Create (2)**.
+
+    ![](../media/mf-10.png)
+
+1. In the Agent **Playgorund** section, verify that the **text-turbo** is selected as Model.
+
+     ![](../media/mf-11.png)
+
+1. In the **Instructions** box, replace the existing text with the following statement: **You are an AI assistant that helps people find information (1)** and select **Save (2)**. 
+
+     ![](../media/mf-12.png)
+
+1. In the **Chat session**, submit the following query:
+
+    ```prompt
+    What kind of article is this?
+    ---
+    Severe drought likely in California
+    
+    Millions of California residents are bracing for less water and dry lawns as drought threatens to leave a large swath of the region with a growing water shortage.
+    
+    In a remarkable indication of drought severity, officials in Southern California have declared a first-of-its-kind action limiting outdoor water use to one day a week for nearly 8 million residents.
+    
+    Much remains to be determined about how daily life will change as people adjust to a drier normal. But officials are warning that the situation is dire and could lead to even more severe limits later in the year.
+    ```
+
+1. The response describes the article. However, suppose you want a more specific format for article categorization.
+  
+    ![](../media/mf-13.png)
+
+1. In the **Instructions** box, replace the existing text with the following statement: **You are a news aggregator that categorizes news articles. (1)** and select **Save (2)**. 
+
+     ![](../media/mf-14.png)
+
+1. In the **Chat session** section, resubmit the following prompt:
+
+    ```prompt
+    What kind of article is this?
+    ---
+    Severe drought likely in California
+    
+    Millions of California residents are bracing for less water and dry lawns as drought threatens to leave a large swath of the region with a growing water shortage.
+    
+    In a remarkable indication of drought severity, officials in Southern California have declared a first-of-its-kind action limiting outdoor water use to one day a week for nearly 8 million residents.
+    
+    Much remains to be determined about how daily life will change as people adjust to a drier normal. But officials are warning that the situation is dire and could lead to even more severe limits later in the year.
+    ```
+
+    The combination of a more specific system message results in a consistent format for the results.
+
+     ![](../media/mf-15.png)
+
+1. Set the **Instructions** box, replace the existing text with the following statement: **You are an AI assistant that helps people find information. (1)** and select **Save (2)**.
+
+   ![](../media/mf-12.png)
+
+1. In the **Chat** section, submit the following prompt:
+
+    ```prompt
+      1. Create a list of animals
+      2. Create a list of whimsical names for those animals
+      3. Combine them randomly into a list of 25 animal and name pairs
+    ```
+    The model will likely respond with an answer to satisfy the prompt, split into a numbered list. This is an appropriate response, but suppose what you wanted was for the model to write a Python program that performs the tasks you described?
+
+    ![](../media/mf-16.png)
+
+1. Update the **Instructions** box, replace the existing text with the following statement: **You are a coding assistant helping write Python code. (1)** and select **Save (2)**.
+
+    ![](../media/mf-17.png)
+
+1. Submit the following prompt to the agent in **Chat** section:
+
+      ```
+      Write a Python function named Multiply that multiplies two numeric parameters.
+      ```
+
+1. Review the response, which should include sample Python code that meets the requirement in the prompt.
+
+    ![](../media/mf-18.png)
+
+### Task 4: Set up an application in Cloud Shell
+
+In this task, you will integrate with an Azure OpenAI model by using a short command-line application running in Cloud Shell on Azure. Open a new browser tab to work with Cloud Shell.
+
+1. Navigate to **Azure portal**, select the **[>_] (Cloud Shell)** button at the top of the page to the right of the search box. A Cloud Shell pane will open at the bottom of the portal.
+
+    ![](../media/cshell.png)
+
+1. The first time you open the Cloud Shell, you may be prompted to choose the type of shell you want to use (*Bash* or *PowerShell*). Select **Bash**. If you don't see this option, skip the step.  
+
+   ![](../media/cloudshell-bash.png)
+
+1. Within the Getting Started pane, select **Mount storage account (1)**, select your **Storage account subscription (2)** from the dropdown and click **Apply (3)**.
+
+   ![](../media/cloudshell-getting-started.png)
+
+1. Within the **Mount storage account** pane, select **I want to create a storage account (1)** and click **Next (2)**.
+
+   ![](../media/cloudshell-mount-strg-account.png)
+
+1. Within the **Advanced settings** pane, enter the following details:
+
+    - **Subscription**: Default- Choose the only existing subscription assigned for this lab (1).
+    - **Resource group**: Select **openai-<inject key="Deployment-ID" enableCopy="false"></inject>** **(2)**
+    - **CloudShell region**: **<inject key="Region" enableCopy="false"></inject> (3)**
+    - **Storage account name**: **storage<inject key="Deployment-ID" enableCopy="false"></inject>(4)**
+    - **File share**: Create a new file share named **none** **(5)**
+    - Click **Create** **(6)**
+
+        ![](../media/cloudshell-advanced-settings.png "Create storage advanced settings")
+        
+      >**Note:** If you encounter any deployment issues related to region availability or capacity, update the region to East US 2 and retry the deployment.
+   
+1. Make sure the type of shell indicated on the top left of the Cloud Shell pane is switched to *Bash*. If it's *PowerShell*, switch to *Bash* by using the drop-down menu.
+
+1. Note that you can resize the cloud shell by dragging the separator bar at the top of the pane, or by using the **&#8212;**, **&#9723;**, and **X** icons at the top right of the pane to minimize, maximize, and close the pane. For more information about using the Azure Cloud Shell, see the [Azure Cloud Shell documentation](https://docs.microsoft.com/azure/cloud-shell/overview).
+
+1. The sample application for this lab is already on your lab VM at `C:\LabFiles\03-prompt-engineering.zip`. Once the terminal starts, upload it to Cloud Shell:
+
+    - On the Cloud Shell toolbar, select **Manage files (1)** and then select **Upload (2)**.
+
+    - In the **Open** dialog, browse to `C:\LabFiles` **(3)**, select **03-prompt-engineering.zip (4)** and select **Open (5)**.
+
+    - Wait for the upload notification at the bottom right of the Cloud Shell pane to show that the upload is complete. The file is saved to your Cloud Shell home directory.
+
+1. Enter the following commands to extract the files to a folder named **03-prompt-engineering** and navigate to it.
+
+    ```bash
+    rm -rf ~/03-prompt-engineering
+    unzip -o ~/03-prompt-engineering.zip -d ~
+    cd ~/03-prompt-engineering
+    ```
+
+    Applications for both C# and Python have been provided, as well as text files in the `prompts` folder that provide the prompts. Both apps feature the same functionality.
+
+1. On the Cloud Shell toolbar, select **Open in VS Code for the Web**. Visual Studio Code for the Web opens in a new browser tab. You'll edit the lab files and run all commands in this tab for the rest of the lab.
+
+    >**Note:** In the **Explorer** pane, expand **Azure Workspace** and then **03-prompt-engineering** to see the **CSharp**, **Python** and **prompts** folders.
+
+1. Open a terminal in Visual Studio Code for the Web: select the **Menu** (**&#9776;**) icon at the top left, then select **Terminal** > **New Terminal**. You can also press **Ctrl+&#96;**. A terminal opens at the bottom of the window. Enter the following command to move to the lab files folder.
+
+    ```bash
+    cd ~/03-prompt-engineering
+    ```
+
+<validation step="e23f27c4-7eec-48ce-9be7-c591acf90cc7" />
+
+> **Congratulations** on completing the task! Now, it's time to validate it. Here are the steps:
+> - Hit the Validate button for the corresponding task. If you receive a success message, you can proceed to the next task. 
+> - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
+> - If you need any assistance, please contact us at cloudlabs-support@spektrasystems.com. We are available 24/7 to help you out.
+
+### Task 5: Configure your application
+
+In this task, you will complete key parts of the provided C# or Python application to enable it to use your Azure OpenAI resource with asynchronous API calls, as both apps feature the same functionality.
+
+1. In the **Visual Studio Code for the Web** tab, in the **Explorer** pane, expand **03-prompt-engineering** and then the **CSharp** or **Python** folder, depending on your language preference. Each folder contains the language-specific files for an app into which you're going to integrate Azure OpenAI functionality.
+
+1. Open the configuration file for your language.
+
+    - C#: `appsettings.json`
+    - Python: `.env`
+    
+1. In the configuration file, enter the following values for your Azure OpenAI service:
+
+    - **Endpoint**: The endpoint URL from your Azure OpenAI resource.
+    - **Key1**: The primary key from your Azure OpenAI resource.
+    - **Deployment Name**: Set this to **text-turbo** (the name of your model deployment).
+    After updating these values, save the file by pressing **Ctrl+S**.
+
+        > **Note:** You can get the Azure OpenAI endpoint and key values from the Azure OpenAI resource's **Key and Endpoint** section under **Resource Management**.
+
+        - **C#:**
+
+            ![](../media/q2.png) 
+
+        - **Python:**
+     
+            ![](../media/q3.png)
+    
+
+1. If you're using **C#**, navigate to `CSharp.csproj`, delete the existing code, then replace it with the following code, and then press **Ctrl+S** to save the file.
+
+    ```
+    <Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+     <ItemGroup>
+     <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.14" />
+     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.404" />
+     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.404" />
+     </ItemGroup>
+
+     <ItemGroup>
+       <None Update="appsettings.json">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+     </ItemGroup>
+
+    </Project>
+    ```    
+
+     ![](../media/L3T3S4-1707.png)    
+
+1. In the terminal at the bottom of Visual Studio Code for the Web, navigate to the folder for your preferred language and install the necessary packages.
+
+   For **C#:**
+
+    ```
+    cd ~/03-prompt-engineering/CSharp
+    export DOTNET_ROOT=$HOME/.dotnet
+    mkdir -p $DOTNET_ROOT
+    ```     
+
+     >**Note:** Azure Cloud Shell often does not have admin privileges, so you need to install .NET in your home directory. So here you are creating a separate `.dotnet` directory under your home directory to isolate your configuration.
+
+     > - DOTNET_ROOT specifies where your .NET runtime and SDK are located (in your $HOME/.dotnet directory).
+     > - mkdir -p $DOTNET_ROOT This creates the directory where the .NET runtime and SDK will be installed.
+
+1. Run the following command to install the required SDK version locally:     
+
+     ```
+     curl -fsSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+     chmod +x dotnet-install.sh
+     ./dotnet-install.sh --channel 8.0 --install-dir $DOTNET_ROOT
+     export PATH=$DOTNET_ROOT:$PATH
+     ```
+
+      >**Note:** These commands download and prepare the official `.NET` installation script, grant it execute permissions, and install the required .NET SDK version (8) in the `$DOTNET_ROOT` directory, as we don't have the admin privileges to install it globally.
+
+1. Enter the following command to restore the workload.
+
+    ```
+    dotnet workload restore
+    ```
+
+     >**Note:** Restores any required workloads for your project, such as additional tools or libraries that are part of the .NET SDK.
+    
+1. Enter the following command to add the `Azure.AI.OpenAI` NuGet package to your project, which is necessary for integrating with Azure OpenAI services.
+
+    ```
+    dotnet add package Azure.AI.OpenAI --version 1.0.0-beta.14
+    ```
+
+1. If you prefer Python, please perform below steps to install the packages
+   
+    **Python**
+   
+    ```bash
+    cd ~/03-prompt-engineering/Python
+    pip install python-dotenv
+    pip install openai==1.56.2
+    ```
+   ![](../media/L2T3S9python-0205.png)
+
+      > **Note:** If you receive a permission error after executing the installation command as shown in the above image, please run the below command for installation/
+      > ```bash
+      > pip install --user python-dotenv
+      > pip install --user openai==1.56.2
+      > ```
+
+1. In the **Visual Studio Code for the Web** tab, open your preferred language folder, select the code file, and add the necessary libraries in the **Add Azure OpenAI package** section.
+
+    **C#:** Program.cs
+
+    ```csharp
+   // Add Azure OpenAI package
+   using Azure.AI.OpenAI;
+    ```
+
+      ![](../media/L3T3S10c-1707.png)
+
+    **Python:** prompt-engineering.py
+
+    ```python
+    # Add Azure OpenAI import
+    from openai import AsyncAzureOpenAI
+    ```
+
+      ![](../media/L3T3S10p1707.png)
+
+1. Open the application code for your language and add the necessary code for configuring the client.
+
+    **C#:** Program.cs - Add the code in **Initialize the Azure OpenAI client** section
+
+    ```csharp
+   // Initialize the Azure OpenAI client
+   OpenAIClient client = new OpenAIClient(new Uri(oaiEndpoint), new AzureKeyCredential(oaiKey));
+    ```
+
+      ![](../media/L3T3S11c-1707.png)
+
+    **Python:** prompt-engineering.py - Add the code in **Set OpenAI configuration settings** section
+
+   ```python
+    # Configure the Azure OpenAI client
+    client = AsyncAzureOpenAI(
+        azure_endpoint = azure_oai_endpoint, 
+        api_key=azure_oai_key,  
+        api_version="2024-02-15-preview"
+        )
+    ```
+
+      ![](../media/L3T3S11p-1707.png)
+
+    >**Note:** Make sure to indent the code by eliminating any extra white spaces after pasting it into Visual Studio Code for the Web.
+
+1. In the function that calls the Azure OpenAI model, add the code to format and send the request to the model.
+
+    **C#:** Program.cs - Add the code in **Create chat completion options** section
+
+    ```csharp
+   // Format and send the request to the model
+    var chatCompletionsOptions = new ChatCompletionsOptions()
+    {
+        Messages =
+        {
+            new ChatRequestSystemMessage(systemPrompt),
+            new ChatRequestUserMessage(userPrompt)
+        },
+        DeploymentName = oaiModelName
+    };
+        
+    // Get response from Azure OpenAI
+    Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+    var completions = response.Value;
+    ```
+
+      ![](../media/L3T3S12c-1707.png)
+
+    **Python:** prompt-engineering.py - Add the code in **Build the messages array** section
+
+    ```python
+    # Format and send the request to the model
+        messages =[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": user_message},
+        ]
+
+        print("\nSending request to Azure OpenAI model...\n")
+    
+
+    # Call the Azure OpenAI model
+        response = await client.chat.completions.create(
+        model=model,
+        messages=messages
+        )
+    ```
+
+      ![](../media/L3T3S12p-1707.png)
+
+    >**Note:** Make sure to indent the code by eliminating any extra white spaces after pasting it into Visual Studio Code for the Web.
+
+1. The modified code should look as shown below:
+
+    **C#**
+      
+      ```csharp
+        // Implicit using statements are included
+         using System.Text;
+         using System.Text.Json;
+         using Microsoft.Extensions.Configuration;
+         using Microsoft.Extensions.Configuration.Json;
+         using Azure;
+         
+         // Add Azure OpenAI package
+         using Azure.AI.OpenAI;
+         
+         // Build a config object and retrieve user settings.
+         IConfiguration config = new ConfigurationBuilder()
+             .AddJsonFile("appsettings.json")
+             .Build();
+         string? oaiEndpoint = config["AzureOAIEndpoint"];
+         string? oaiKey = config["AzureOAIKey"];
+         string? oaiModelName = config["AzureOAIModelName"];
+         
+         string command;
+         bool printFullResponse = false;
+         
+         do {
+             Console.WriteLine("\n1: Basic prompt (no prompt engineering)\n" +
+             "2: Prompt with email formatting and basic system message\n" +
+             "3: Prompt with formatting and specifying content\n" +
+             "4: Prompt adjusting system message to be light and use jokes\n" +
+             "\"quit\" to exit the program\n\n" + 
+             "Enter a number to select a prompt:");
+         
+             command = Console.ReadLine() ?? "";
+             
+             switch (command) {
+                 case "1":
+                     await GetResponseFromOpenAI("../prompts/basic.txt");
+                     break;
+                 case "2":
+                     await GetResponseFromOpenAI("../prompts/email-format.txt");
+                     break;
+                 case "3":
+                     await GetResponseFromOpenAI("../prompts/specify-content.txt");
+                     break;
+                 case "4":
+                     await GetResponseFromOpenAI("../prompts/specify-tone.txt");
+                     break;
+                 case "quit":
+                     Console.WriteLine("Exiting program...");
+                     break;
+                 default:
+                     Console.WriteLine("Invalid input. Please try again.");
+                     break;
+             }
+         } while (command != "quit");
+         
+         async Task GetResponseFromOpenAI(string fileText)  
+         {   
+             Console.WriteLine("\nSending prompt to Azure OpenAI endpoint...\n\n");
+         
+             if(string.IsNullOrEmpty(oaiEndpoint) || string.IsNullOrEmpty(oaiKey) || string.IsNullOrEmpty(oaiModelName) )
+             {
+                 Console.WriteLine("Please check your appsettings.json file for missing or incorrect values.");
+                 return;
+             }
+             
+             // Initialize the Azure OpenAI client
+             OpenAIClient client = new OpenAIClient(new Uri(oaiEndpoint), new AzureKeyCredential(oaiKey));
+         
+             // Read text file into system and user prompts
+             string[] prompts = System.IO.File.ReadAllLines(fileText);
+             string systemPrompt = prompts[0].Split(":", 2)[1].Trim();
+             string userPrompt = prompts[1].Split(":", 2)[1].Trim();
+         
+             // Write prompts to console
+             Console.WriteLine("System prompt: " + systemPrompt);
+             Console.WriteLine("User prompt: " + userPrompt);
+             
+             // Create chat completion options
+             // Format and send the request to the model
+             var chatCompletionsOptions = new ChatCompletionsOptions()
+             {
+                 Messages =
+                 {
+                     new ChatRequestSystemMessage(systemPrompt),
+                     new ChatRequestUserMessage(userPrompt)
+                 },
+                 DeploymentName = oaiModelName
+             };
+                 
+             // Get response from Azure OpenAI
+             Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+             var completions = response.Value;
+             
+             // Write full response if needed
+             if (printFullResponse)
+             {
+                 Console.WriteLine($"\nFull response: {JsonSerializer.Serialize(completions, new JsonSerializerOptions { WriteIndented = true })}\n\n");
+             }
+         
+             // Write the first choice's message
+             foreach (var choice in completions.Choices)
+             {
+                 Console.WriteLine($"\nResponse: {choice.Message.Content}\n\n");
+             }
+         }       
+      ```
+   
+     **Python**
+   
+      ```python
+      import os
+      import asyncio
+      from dotenv import load_dotenv
+      
+      # Add OpenAI import
+      # Add Azure OpenAI package
+      from openai import AsyncAzureOpenAI
+      
+      # Set to True to print the full response from OpenAI for each call
+      printFullResponse = False
+      
+      async def main(): 
+          try: 
+              # Get configuration settings 
+              load_dotenv()
+              azure_oai_endpoint = os.getenv("AZURE_OAI_ENDPOINT")
+              azure_oai_key = os.getenv("AZURE_OAI_KEY")
+              azure_oai_model = os.getenv("AZURE_OAI_MODEL")
+              
+              # Set OpenAI configuration settings
+              # Configure the Azure OpenAI client
+              client = AsyncAzureOpenAI(
+                  azure_endpoint = azure_oai_endpoint, 
+                  api_key=azure_oai_key,  
+                  api_version="2024-02-15-preview"
+                  )
+          
+      
+              while True:
+                  print('1: Basic prompt (no prompt engineering)\n' +
+                      '2: Prompt with email formatting and basic system message\n' +
+                      '3: Prompt with formatting and specifying content\n' +
+                      '4: Prompt adjusting system message to be light and use jokes\n' +
+                      '\'quit\' to exit the program\n')
+                  command = input('Enter a number:')
+                  if command == '1':
+                      await call_openai_model(messages="../prompts/basic.txt", model=azure_oai_model, client=client)
+                  elif command =='2':
+                      await call_openai_model(messages="../prompts/email-format.txt", model=azure_oai_model, client=client)
+                  elif command =='3':
+                      await call_openai_model(messages="../prompts/specify-content.txt", model=azure_oai_model, client=client)
+                  elif command =='4':
+                      await call_openai_model(messages="../prompts/specify-tone.txt", model=azure_oai_model, client=client)
+                  elif command.lower() == 'quit':
+                      print('Exiting program...')
+                      break
+                  else :
+                      print("Invalid input. Please try again.")
+      
+          except Exception as ex:
+              print(ex)
+      
+      async def call_openai_model(messages, model, client):
+          # In this sample, each file contains both the system and user messages
+          # First, read them into variables, strip whitespace, then build the messages array
+          with open(messages, encoding="utf8") as file:
+              system_message = file.readline().split(':', 1)[1].strip()
+              user_message = file.readline().split(':', 1)[1].strip()
+      
+          # Print the messages to the console
+          print("System message: " + system_message)
+          print("User message: " + user_message)
+      
+          # Build the messages array
+          # Format and send the request to the model
+          messages =[
+                  {"role": "system", "content": system_message},
+                  {"role": "user", "content": user_message},
+          ]
+      
+          print("\nSending request to Azure OpenAI model...\n")
+      
+      # Call the Azure OpenAI model
+          response = await client.chat.completions.create(
+          model=model,
+          messages=messages
+          )
+          
+      
+          if printFullResponse:
+              print(response)
+      
+          print("Completion: \n\n" + response.choices[0].message.content + "\n")
+      
+      if __name__ == '__main__': 
+          asyncio.run(main())
+
+      ```
+
+    >**Note:** Make sure to indent the code by eliminating any extra white spaces after pasting it into Visual Studio Code for the Web.
+
+1. To save the changes made to the file, press **Ctrl+S**.
+
+### Task 6: Run your application
+
+In this task, you will run your configured app to send a request to your model and observe the response. You'll notice that the only difference between the options is the content of the prompt, while all other parameters (such as token count and temperature) remain consistent across requests.
+
+1. In the terminal at the bottom of Visual Studio Code for the Web, enter the command for your preferred language to move to its folder and run the application.
+
+    - **C#:**
+
+      ```bash
+      cd ~/03-prompt-engineering/CSharp
+      dotnet run
+      ```
+
+      > **Note:** If you receive any warning messages, you can ignore them and continue.
+      
+    - **Python:**
+
+      ```bash
+      cd ~/03-prompt-engineering/Python
+      python prompt-engineering.py
+      ```
+
+       >**Note:** If you encounter any errors after running the Python script, try upgrading the OpenAI package by running the following command: `pip install --user --upgrade openai`
+
+       >Note: If you get any **ImportError: cannot import name 'ChatCompletionReasoningEffort' from 'openai.types.chat'**, then try executing the below commands once and then try to run the Python application.
+       
+       >```
+       >pip uninstall -y openai
+       >rm -rf /home/odl_user/.local/lib/python3.12/site-packages/openai
+       >rm -rf /home/odl_user/.local/lib/python3.12/site-packages/openai-*
+       >pip install --user --no-cache-dir openai==1.56.2
+       >```
+
+       > **Tip:** You can drag the top edge of the terminal panel up, or use the **Maximize Panel Size** (**^**) icon in the terminal toolbar, to see more of the console text.
+
+1. For the first iteration, Type **1** which selects the **Basic prompt (no prompt engineering)**, and press enter for **Enter a number to select a prompt**.
+
+1. The AI tool will take the,
+
+   -  **System prompt:** `You are an AI assistant`
+   -  **User prompt:** `Write an intro for a new wildlife Rescue`
+
+        ![](../media/L3T4S5-1707.png)
+
+1. Observe the output. The model will likely produce a good generic introduction to a wildlife rescue.
+
+1. Next, enter **2** to select **Prompt with email formatting and basic system message** and press enter for **Enter a number to select a prompt**.
+
+1. This time it will take the,
+
+   - **System prompt:** `You are an AI assistant helping to write emails`
+   - **User prompt:** `Write a promotional email for a new wildlife rescue, including the following: - Rescue name is Contoso - It specializes in elephants - Call for donations to be given at our website`
+
+        ![](../media/L3T4S8-1707.png)
+
+1. Observe the output. This time, you'll likely see the format of an email with the specific animals included, as well as the call for donations.
+
+1. Next, enter **3** to select **Prompt with formatting and specifying content** and press enter for **Enter a number to select a prompt**.
+
+1. Observe, it will take the,
+
+   - **System prompt:** `You are an AI assistant helping to write emails`
+   - **User prompt:** `Write a promotional email for a new wildlife rescue, including the following: - Rescue name is Contoso - It specializes in elephants, as well as zebras and giraffes - Call for donations to be given at our website \n\n Include a list of the current animals we have at our rescue after the signature, in the form of a table. These animals include elephants, zebras, gorillas, lizards, and jackrabbits.`
+
+        ![](../media/w8-1.png)
+
+1. Observe the output and see how the email has changed based on your clear instructions.
+
+1. Next, enter **4** to select **Prompt adjusting system message to be light and use jokes** and press enter for **Enter a number to select a prompt**.
+
+1. It will take the,
+
+   - **System prompt:** `You are an AI assistant that helps write promotional emails to generate interest in a new business. Your tone is light, chit-chat oriented, and you always include at least two jokes.`
+   - **User prompt:** `Write a promotional email for a new wildlife rescue, including the following: Rescue name is Contoso, it specializes in elephants, as well as zebras and giraffes, call for donations to be given at our website, include a list of the current animals we have at our rescue after the signature in the form of a table, these animals include elephants, zebras, gorillas, lizards, and jackrabbits.`
+
+        ![](../media/L3T4S14-1707.png)
+
+11. Observe the output. This time, you'll likely see the email in a similar format, but with a much more informal tone. You'll likely even see jokes included!
+
+## Summary
+
+In this lab, you explored how prompt engineering can influence the behavior of an AI model. You experimented with different system messages and few-shot examples in the chat playground to see how they affected the model's responses. You also set up a simple application in Cloud Shell that interacts with your Azure OpenAI model, allowing you to see how different prompts yield different results while keeping other parameters constant.
+
+### You have successfully completed the lab.
