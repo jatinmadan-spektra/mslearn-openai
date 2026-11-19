@@ -26,9 +26,9 @@ In this task, you'll create an Azure resource in the Azure portal, selecting the
 
    ![](../media/mf-1.png)
 
-1. On the **Microsoft Foundry** overview pane, select **Create a resource**
+1. On the **Microsoft Foundry** overview pane, select **Create a Foundry resource**
 
-   ![](../media/mf-2.png)
+   ![](../media/new-1.png)
 
 1. Create a **Foundry** resource using the settings below, then click **Review + create (6)** , leaving all other options at their defaults.
     
@@ -167,9 +167,13 @@ In this task, you will set up a development environment using Azure Cloud Shell.
 
     - On the Cloud Shell toolbar, select **Manage files (1)** and then select **Upload (2)**.
 
-    - In the **Open** dialog, browse to `C:\LabFiles` **(3)**, select **01-app-develop.zip (4)** and select **Open (5)**.
+    - In the **Open** dialog, browse to `C:\LabFiles`, select **01-app-develop.zip (3)** and select **Open (4)**.
 
     - Wait for the upload notification at the bottom right of the Cloud Shell pane to show that the upload is complete. The file is saved to your Cloud Shell home directory.
+
+       ![](../media/new-2.png)
+
+       ![](../media/new-3.png) 
 
 9. Enter the following commands to extract the files to a folder named **01-app-develop** and navigate to it.
 
@@ -179,9 +183,13 @@ In this task, you will set up a development environment using Azure Cloud Shell.
     cd ~/01-app-develop
     ```
 
+    ![](../media/new-4.png) 
+
     >**Note**: Applications for both **C#** and **Python** have been provided. Both apps feature the same functionality.
 
 10. On the Cloud Shell toolbar, select **Open in VS Code for the Web**. Visual Studio Code for the Web opens in a new browser tab. You'll edit the lab files and run all commands in this tab for the rest of the lab.
+
+    ![](../media/new-5.png)
 
     >**Note:** In the **Explorer** pane, expand **Azure Workspace** and then **01-app-develop** to see the **CSharp** and **Python** folders.
 
