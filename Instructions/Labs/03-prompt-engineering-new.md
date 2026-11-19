@@ -25,9 +25,9 @@ In this task, you'll create an Azure resource in the Azure portal by selecting t
 
    ![](../media/mf-1.png)
 
-1. On the **Microsoft Foundry** overview pane, select **Create a resource**
+1. On the **Microsoft Foundry** overview pane, select **Create a Foundry resource**
 
-   ![](../media/mf-2.png)
+   ![](../media/new-1.png)
 
 1. Create a **Foundry** resource using the settings below, then click **Review + create (6)** , leaving all other options at their defaults.
     
@@ -127,6 +127,8 @@ In this task, you will examine how prompt engineering improves model responses i
     >**Note:** If foundry user role is not assigned, click **Assign me**. Wait for 5 minutes and refresh the page. Again click **Save as Agent**.
 
      ![](../media/mf-9.png)
+
+    >**Note:** If **Save as agent** is greyed out, select Agents from the left pane, then select **Assign me the Foundry User role**. Wait about 5 minutes for the role to take effect, refresh the page, and click **create an agent**.
 
 1. On **Create an agent** pop-up, enter the Agent name as **text-turbo-agent (1)** and click **Create (2)**.
 
@@ -241,8 +243,6 @@ In this task, you will integrate with an Azure OpenAI model by using a short com
         ![](../media/cloudshell-advanced-settings.png "Create storage advanced settings")
         
       >**Note:** If you encounter any deployment issues related to region availability or capacity, update the region to East US 2 and retry the deployment.
-   
-1. Make sure the type of shell indicated on the top left of the Cloud Shell pane is switched to *Bash*. If it's *PowerShell*, switch to *Bash* by using the drop-down menu.
 
 1. Note that you can resize the cloud shell by dragging the separator bar at the top of the pane, or by using the **&#8212;**, **&#9723;**, and **X** icons at the top right of the pane to minimize, maximize, and close the pane. For more information about using the Azure Cloud Shell, see the [Azure Cloud Shell documentation](https://docs.microsoft.com/azure/cloud-shell/overview).
 
@@ -250,9 +250,13 @@ In this task, you will integrate with an Azure OpenAI model by using a short com
 
     - On the Cloud Shell toolbar, select **Manage files (1)** and then select **Upload (2)**.
 
-    - In the **Open** dialog, browse to `C:\LabFiles` **(3)**, select **03-prompt-engineering.zip (4)** and select **Open (5)**.
+    - In the **Open** dialog, browse to `C:\LabFiles`, select **03-prompt-engineering.zip (3)** and select **Open (4)**.
 
     - Wait for the upload notification at the bottom right of the Cloud Shell pane to show that the upload is complete. The file is saved to your Cloud Shell home directory.
+
+       ![](../media/new-2.png)
+
+       ![](../media/new-6.png)
 
 1. Enter the following commands to extract the files to a folder named **03-prompt-engineering** and navigate to it.
 
@@ -262,17 +266,23 @@ In this task, you will integrate with an Azure OpenAI model by using a short com
     cd ~/03-prompt-engineering
     ```
 
+    ![](../media/new-7.png)
+
     Applications for both C# and Python have been provided, as well as text files in the `prompts` folder that provide the prompts. Both apps feature the same functionality.
 
 1. On the Cloud Shell toolbar, select **Open in VS Code for the Web**. Visual Studio Code for the Web opens in a new browser tab. You'll edit the lab files and run all commands in this tab for the rest of the lab.
 
+    ![](../media/new-5.png)
+
     >**Note:** In the **Explorer** pane, expand **Azure Workspace** and then **03-prompt-engineering** to see the **CSharp**, **Python** and **prompts** folders.
 
-1. Open a terminal in Visual Studio Code for the Web: select the **Menu** (**&#9776;**) icon at the top left, then select **Terminal** > **New Terminal**. You can also press **Ctrl+&#96;**. A terminal opens at the bottom of the window. Enter the following command to move to the lab files folder.
+1. Open a terminal in Visual Studio Code for the Web: select the **Menu (1)** (**&#9776;**) icon at the top left, then select **Terminal (2)** > **New Terminal (3)**. A terminal opens at the bottom of the window. Enter the following command to move to the lab files folder.
 
     ```bash
     cd ~/03-prompt-engineering
     ```
+    
+    ![](../media/new-8.png)
 
 <validation step="e23f27c4-7eec-48ce-9be7-c591acf90cc7" />
 
@@ -337,7 +347,7 @@ In this task, you will complete key parts of the provided C# or Python applicati
     </Project>
     ```    
 
-     ![](../media/L3T3S4-1707.png)    
+     ![](../media/new-9.png)    
 
 1. In the terminal at the bottom of Visual Studio Code for the Web, navigate to the folder for your preferred language and install the necessary packages.
 

@@ -199,6 +199,8 @@ In this task, you will set up a development environment using Azure Cloud Shell.
     cd ~/01-app-develop
     ```
 
+    ![](../media/new-8.png)
+
 <validation step="c83e5778-f8f1-451e-91ef-8e9728676797" />
 
 > **Congratulations** on completing the task! Now, it's time to validate it. Here are the steps:
@@ -249,11 +251,11 @@ In this task, you will configure the application to connect with the Azure OpenA
 
     - **C#:**
      
-      ![](../media/nlp26.png)
+      ![](../media/q2.png)
 
     - **Python:**
      
-      ![](../media/nlp27.png)
+      ![](../media/q3.png)
 
        > **Note:** You can get the Azure OpenAI endpoint and key values from the Azure OpenAI resource's **Key and Endpoint** section under **Resource Management**. Refer to `Task 1: Step 6`.
 
